@@ -1,0 +1,31 @@
+{
+  "name": "zcode-account-switcher",
+  "version": "1.0.0",
+  "description": "ZCode 账号无感切换工具 —— 备份/恢复登录态快照，免去重复 OAuth+验证码登录",
+  "type": "commonjs",
+  "main": "src/cli.js",
+  "bin": {
+    "zcas": "src/cli.js",
+    "zcode-account-switcher": "src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "list": "node src/cli.js list",
+    "status": "node src/cli.js status",
+    "quota": "node src/cli.js quota",
+    "desktop": "npm --prefix desktop start",
+    "desktop:dev": "npm --prefix desktop run dev",
+    "build": "npm --prefix desktop run build"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "zcode",
+    "z.ai",
+    "glm",
+    "account",
+    "switcher"
+  ],
+  "license": "MIT"
+}

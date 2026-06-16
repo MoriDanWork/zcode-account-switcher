@@ -1,0 +1,28 @@
+# 账号快照（含登录态/token，敏感，勿提交）
+accounts/
+.last/
+
+# OAuth 浏览器登录态（含 cookie/session，敏感）
+browser_profile/
+
+# Node
+node_modules/
+
+# 日志
+*.log
+desktop/err.txt
+
+# 构建产物
+desktop/dist-renderer/
+
+# 本地开发/抓包临时文件
+*.har
+.codex/
+.zcode/
+ui-ux-pro-max-skill/
+ui-ux-pro-max-skill.zip
+analyze-har*.js
+test-exchange.js
+asar-list.js
+asar-files.txt
+项目状态与计划.md
