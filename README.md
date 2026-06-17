@@ -2,6 +2,11 @@
 
 一个**可视化**的 ZCode 账号切换工具，提供**桌面版（Electron 图形界面）**和 **CLI 命令行版**两种形态，**一键切换 ZCode 客户端的登录账号**，免去每次重新走 OAuth + 验证码登录的繁琐流程。
 
+**语言版本**
+
+- [English documentation](docs/README.en.md)
+- [Русская документация](docs/README.ru.md)
+
 ## 适用场景
 
 - 经常在多个 ZCode 账号之间切换。
