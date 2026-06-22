@@ -11,24 +11,46 @@
 
 ---
 
-## 桌面版（推荐 · 图形界面）
+## 📦 下载安装（推荐）
 
-1、下载整个包后，双击 `启动桌面版.bat` 即可，首次会自动安装依赖并构建界面，之后直接启动。
+前往 [Releases 页面](https://github.com/smartlizi/zcode-account-switcher/releases/latest) 下载对应系统的安装包：
 
-<img width="396" height="402" alt="1c99b54906ffc7fe2746bdb262d0817e" src="https://github.com/user-attachments/assets/7a4fbe69-dbe7-48ce-805b-97ef8c0262e6" />
+| 系统 | 文件名 | 说明 |
+|------|--------|------|
+| **Windows** | `ZCode.Account.Switcher.Setup.x.x.x.exe` | NSIS 安装程序（推荐） |
+| **Windows** | `ZCode.Account.Switcher.exe` | 便携版（无需安装，双击直接运行） |
+| **macOS** | `ZCode.Account.Switcher-x.x.x.dmg` | DMG 安装包 |
+| **Linux** | `ZCode.Account.Switcher-x.x.x.AppImage` | AppImage（chmod +x 后运行） |
 
-2、点击右上角添加账号，会弹出浏览器窗口
+> **Windows 安装提示**：安装时若弹出「无法关闭 ZCode」提示，请手动关闭 ZCode 客户端后点「重试」即可继续安装。
 
-<img width="2592" height="1706" alt="image" src="https://github.com/user-attachments/assets/959e26a3-a8a2-4a5d-8525-0b93ef9d2346" />
+---
 
-3、在弹出的浏览器中输入完毕账号信息，登录以后，就无须操作了，软件自行获取账号信息
+## 桌面版使用说明
 
-<img width="2997" height="1242" alt="bf0b9f0e45315aafa8d6d48d29b04536" src="https://github.com/user-attachments/assets/7fffdf6a-ec40-47d8-98c9-1eb76ddb6dad" />
+### 1. 安装并启动应用
 
-4、等待系统获取完账号信息以后，列表会出现这样一条数据
+下载对应系统的安装包安装后，从桌面或开始菜单打开「ZCode Account Switcher」。
 
-<img width="1899" height="1250" alt="bc06e94e286224aa6c9c624fcfff2984" src="https://github.com/user-attachments/assets/48953c59-3f50-4e3d-8332-4ee4074c1ad9" />
+<img width="396" height="402" alt="主界面" src="https://github.com/user-attachments/assets/7a4fbe69-dbe7-48ce-805b-97ef8c0262e6" />
 
+### 2. 添加账号
+
+点击右上角**「添加账号」**按钮，系统浏览器会自动打开 Z.ai 登录页面。
+
+<img width="2592" height="1706" alt="添加账号" src="https://github.com/user-attachments/assets/959e26a3-a8a2-4a5d-8525-0b93ef9d2346" />
+
+### 3. 在浏览器中登录
+
+在弹出的浏览器窗口中完成账号登录，无需在应用内做任何操作，软件会自动检测并获取账号信息。
+
+<img width="2997" height="1242" alt="浏览器登录" src="https://github.com/user-attachments/assets/7fffdf6a-ec40-47d8-98c9-1eb76ddb6dad" />
+
+### 4. 账号添加成功
+
+登录完成后，账号列表中会出现新账号，点击即可一键切换。
+
+<img width="1899" height="1250" alt="账号列表" src="https://github.com/user-attachments/assets/48953c59-3f50-4e3d-8332-4ee4074c1ad9" />
 
 ---
 
@@ -155,31 +177,26 @@ zcode-account-switcher/
 │   ├── fingerprint.js            # JWT 解码取 user_id 作为账号指纹
 │   ├── manager.js                # 快照增删查改（list/capture/use/delete/rename）
 │   ├── switcher.js               # 进程检测 / 备份 / 原子替换 / 回滚
+│   ├── oauth.js                  # OAuth 凭据写盘 + 账号快照
+│   ├── oauthCli.js               # CLI OAuth 登录流程（ZaiAuthFlow）
+│   ├── quota.js                  # 额度查询（billing API）
+│   ├── zcodeCrypto.js            # enc:v1 加解密（机器绑定密钥）
+│   ├── accountHealth.js          # 账号快照健康检查
 │   └── cli.js                    # CLI 命令路由（UTF-8 输出修复）
 ├── desktop/                      # Electron 桌面应用
 │   ├── main.js                   # 主进程：建窗口 + IPC + 日志
 │   ├── preload.js                # contextBridge 安全桥接
-│   ├── index.html                # Vite 入口（开发用）
 │   ├── vite.config.js            # React 构建配置
 │   ├── assets/icon.png           # 应用图标
-│   └── renderer/                 # React 前端（App + 4 组件 + 暗色主题）
-├── accounts/                     # 账号快照（<id>.meta.json + <id>.snap.json，自动生成，勿提交）
+│   ├── package.json              # Electron 依赖 + electron-builder 配置
+│   └── renderer/                 # React 前端（App + 组件 + 暗色主题）
+├── .github/workflows/
+│   └── release.yml               # GitHub Actions：push tag → 三端自动打包发布
+├── accounts/                     # 账号快照（自动生成，勿提交）
 ├── .last/                        # 上次切换前的登录态（回滚用，自动生成，勿提交）
-├── 启动桌面版.bat                 # 双击启动桌面应用（生产模式）
-├── 启动桌面版-开发模式.bat         # 开发模式（vite 热更新）
 ├── package.json
 └── README.md
 ```
-
----
-
-## 发布前安全提醒
-
-公开发布或上传 GitHub 前，请再次确认仓库中不包含以下内容：
-
-- `accounts/`、`.last/`、`browser_profile/` 等本地账号和登录态目录。
-- `.har`、`.log`、token、cookie、session 等敏感文件。
-- `node_modules/`、构建产物、临时分析脚本等本地开发文件。
 
 ---
 
@@ -197,18 +214,25 @@ A: 会。`access_token` 有有效期。但 ZCode 客户端启动后会用 refres
 **Q: 换电脑了怎么办？**
 A: 把 `accounts/` 整个目录拷过去即可（前提是新机器也装了 ZCode 且 `.zcode/v2` 路径一致）。
 
+**Q: Windows 安装时提示"无法关闭 ZCode"？**
+A: 这是正常行为，安装程序检测到 ZCode 正在运行。手动关闭 ZCode 后点「重试」即可继续安装。
+
+**Q: 下载了 `.exe` 便携版但无法"安装"？**
+A: 便携版无需安装，双击直接运行即可，不会写入注册表或创建快捷方式。
+
 ---
 
 ⚠️ 免责声明
+
 本项目仅供学习研究和个人使用，严禁用于商业用途或对外提供服务。
 
-使用本项目产生的一切后果（包括但不限于账号封禁、法律风险）由使用者自行承担
+使用本项目产生的一切后果（包括但不限于账号封禁、法律风险）由使用者自行承担。
 
-本项目不存储、不收集任何用户数据
+本项目不存储、不收集任何用户数据。
 
-如有侵权，请联系删除
+如有侵权，请联系删除。
 
-请遵守 Z.AI / 智谱 的服务条款，合理使用，避免对官方服务造成压力
+请遵守 Z.AI / 智谱 的服务条款，合理使用，避免对官方服务造成压力。
 
 此项目是纯粹研究交流学习性质！
 
