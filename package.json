@@ -8,6 +8,10 @@
     "zcas": "src/cli.js",
     "zcode-account-switcher": "src/cli.js"
   },
+  "files": [
+    "src/**/*.js",
+    "README.md"
+  ],
   "scripts": {
     "start": "node src/cli.js",
     "list": "node src/cli.js list",
