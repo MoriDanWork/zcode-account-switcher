@@ -32,8 +32,6 @@
 
 下载对应系统的安装包安装后，从桌面或开始菜单打开「ZCode Account Switcher」。
 
-<img width="396" height="402" alt="主界面" src="https://github.com/user-attachments/assets/7a4fbe69-dbe7-48ce-805b-97ef8c0262e6" />
-
 ### 2. 添加账号
 
 点击右上角**「添加账号」**按钮，系统浏览器会自动打开 Z.ai 登录页面。
