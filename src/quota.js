@@ -11,6 +11,19 @@ const { decrypt, isEncrypted } = require('./zcodeCrypto');
 const BILLING_CURRENT_URL = 'https://zcode.z.ai/api/v1/zcode-plan/billing/current';
 const BILLING_BALANCE_URL = 'https://zcode.z.ai/api/v1/zcode-plan/billing/balance';
 
+// ZCode 客户端请求 billing/current 时带 app_version + platform 参数，
+// 服务端根据这些参数路由到正确的 billing plan 版本；
+// 缺少参数时服务端可能返回空 plans（新账号场景下尤为明显）。
+const CLIENT_APP_VERSION = '4.1.10';
+const CLIENT_PLATFORM = 'win32-x64';
+
+function buildBillingUrl(baseUrl) {
+  var url = new URL(baseUrl);
+  url.searchParams.set('app_version', CLIENT_APP_VERSION);
+  url.searchParams.set('platform', CLIENT_PLATFORM);
+  return url.toString();
+}
+
 async function getQuotaOverview() {
   const tokens = readCandidateTokens();
   if (tokens.length === 0) throw new Error('未找到可用于查询额度的 ZCode token，请先登录或切换账号');
@@ -25,7 +38,7 @@ async function queryQuotaByTokens(tokens) {
   let lastError = null;
   for (const token of tokens) {
     try {
-      const current = await fetchBilling(BILLING_CURRENT_URL, token);
+      const current = await fetchBilling(buildBillingUrl(BILLING_CURRENT_URL), token);
       const balance = await fetchBilling(BILLING_BALANCE_URL, token);
       const overview = normalizeQuota(current.data, balance.data);
 
@@ -284,6 +297,9 @@ function parseJsonText(text) {
 module.exports = {
   BILLING_CURRENT_URL,
   BILLING_BALANCE_URL,
+  buildBillingUrl,
+  CLIENT_APP_VERSION,
+  CLIENT_PLATFORM,
   getQuotaOverview,
   getAccountQuota,
   queryQuotaByToken,
